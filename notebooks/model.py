@@ -32,7 +32,11 @@ def psnr(denoised, ground_truth):
 ### For mini - project 1
 class Model ():
     def __init__(self) -> None :
-        
+        # instantaiate model + optimizer + loss function + any other stuff you need
+
+        # model: UNet
+        # optimizer: Adam?
+        # loss function: MSE or HDRLoss for MonteCarlo images ? 
 
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
