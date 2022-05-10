@@ -35,8 +35,13 @@ class Model ():
         # instantaiate model + optimizer + loss function + any other stuff you need
 
         # model: UNet
-        # optimizer: Adam?
+        self.model = nn.Sequential()
+        
+        # optimizer: Adam; try different learning rates
+        self.optim = optim.Adam(self.model.parameters(), lr = 1e-1)
+
         # loss function: MSE or HDRLoss for MonteCarlo images ? 
+        self.loss = nn.MSELoss()
 
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
