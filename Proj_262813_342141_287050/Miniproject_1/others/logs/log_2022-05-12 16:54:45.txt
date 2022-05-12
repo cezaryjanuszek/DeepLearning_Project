@@ -1,0 +1,437 @@
+2022-05-12 16:54:49,313 - numexpr.utils - INFO - _init_num_threads() - NumExpr defaulting to 8 threads.
+2022-05-12 16:59:16,334 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 16:59:20,732 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:00:41,241 - root - INFO - print_n_log() - 	loss=0.022545669227838516
+2022-05-12 17:00:47,904 - root - INFO - print_n_log() - 	psnr=24.40784454345703
+2022-05-12 17:00:47,904 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:02:02,132 - root - INFO - print_n_log() - 	loss=0.014854030683636665
+2022-05-12 17:02:08,307 - root - INFO - print_n_log() - 	psnr=24.568479537963867
+2022-05-12 17:02:08,307 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:03:22,563 - root - INFO - print_n_log() - 	loss=0.014734257012605667
+2022-05-12 17:03:28,763 - root - INFO - print_n_log() - 	psnr=24.670074462890625
+2022-05-12 17:03:28,763 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:04:43,095 - root - INFO - print_n_log() - 	loss=0.014670837670564651
+2022-05-12 17:04:49,656 - root - INFO - print_n_log() - 	psnr=24.746381759643555
+2022-05-12 17:04:49,656 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:06:05,632 - root - INFO - print_n_log() - 	loss=0.014626746065914631
+2022-05-12 17:06:11,854 - root - INFO - print_n_log() - 	psnr=24.807456970214844
+2022-05-12 17:06:11,854 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:07:26,080 - root - INFO - print_n_log() - 	loss=0.014594551175832748
+2022-05-12 17:07:32,258 - root - INFO - print_n_log() - 	psnr=24.86081886291504
+2022-05-12 17:07:32,258 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:08:46,265 - root - INFO - print_n_log() - 	loss=0.014567584730684757
+2022-05-12 17:08:54,113 - root - INFO - print_n_log() - 	psnr=24.898508071899414
+2022-05-12 17:08:54,113 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:10:08,698 - root - INFO - print_n_log() - 	loss=0.01454833708703518
+2022-05-12 17:10:14,844 - root - INFO - print_n_log() - 	psnr=24.927860260009766
+2022-05-12 17:10:14,844 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:11:29,105 - root - INFO - print_n_log() - 	loss=0.014530331827700138
+2022-05-12 17:11:35,261 - root - INFO - print_n_log() - 	psnr=24.969970703125
+2022-05-12 17:11:35,262 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:12:49,384 - root - INFO - print_n_log() - 	loss=0.014515829272568226
+2022-05-12 17:12:55,584 - root - INFO - print_n_log() - 	psnr=25.01194953918457
+2022-05-12 17:23:44,852 - root - INFO - print_n_log() - === Using model2 ===
+2022-05-12 17:23:47,141 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:23:50,179 - root - INFO - print_n_log() - 	loss=0.02845371514558792
+2022-05-12 17:23:50,687 - root - INFO - print_n_log() - 	psnr=23.322494506835938
+2022-05-12 17:23:50,688 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:23:53,665 - root - INFO - print_n_log() - 	loss=0.01575091853737831
+2022-05-12 17:23:54,176 - root - INFO - print_n_log() - 	psnr=24.117572784423828
+2022-05-12 17:23:54,176 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:23:57,086 - root - INFO - print_n_log() - 	loss=0.015293065458536148
+2022-05-12 17:23:57,575 - root - INFO - print_n_log() - 	psnr=24.373825073242188
+2022-05-12 17:23:57,575 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:24:00,472 - root - INFO - print_n_log() - 	loss=0.015123735181987286
+2022-05-12 17:24:00,963 - root - INFO - print_n_log() - 	psnr=24.51120376586914
+2022-05-12 17:24:00,963 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:24:03,839 - root - INFO - print_n_log() - 	loss=0.015019201673567295
+2022-05-12 17:24:04,323 - root - INFO - print_n_log() - 	psnr=24.58721351623535
+2022-05-12 17:24:04,323 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:24:07,183 - root - INFO - print_n_log() - 	loss=0.014937253668904305
+2022-05-12 17:24:07,683 - root - INFO - print_n_log() - 	psnr=24.64687156677246
+2022-05-12 17:24:07,683 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:24:10,534 - root - INFO - print_n_log() - 	loss=0.014898065477609634
+2022-05-12 17:24:11,011 - root - INFO - print_n_log() - 	psnr=24.68531608581543
+2022-05-12 17:24:11,011 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:24:13,828 - root - INFO - print_n_log() - 	loss=0.01487463153898716
+2022-05-12 17:24:14,289 - root - INFO - print_n_log() - 	psnr=24.690540313720703
+2022-05-12 17:24:14,290 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:24:17,106 - root - INFO - print_n_log() - 	loss=0.014858865179121494
+2022-05-12 17:24:17,572 - root - INFO - print_n_log() - 	psnr=24.697734832763672
+2022-05-12 17:24:17,572 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:24:20,429 - root - INFO - print_n_log() - 	loss=0.014845602214336395
+2022-05-12 17:24:20,893 - root - INFO - print_n_log() - 	psnr=24.762535095214844
+2022-05-12 17:25:28,054 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:25:30,090 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:25:41,688 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:25:43,526 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:25:47,329 - root - INFO - print_n_log() - 	loss=0.10028679668903351
+2022-05-12 17:25:47,919 - root - INFO - print_n_log() - 	psnr=14.920929908752441
+2022-05-12 17:25:47,920 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:25:51,351 - root - INFO - print_n_log() - 	loss=0.037642862647771835
+2022-05-12 17:25:51,969 - root - INFO - print_n_log() - 	psnr=17.460309982299805
+2022-05-12 17:25:51,969 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:25:55,467 - root - INFO - print_n_log() - 	loss=0.029385240748524666
+2022-05-12 17:25:56,022 - root - INFO - print_n_log() - 	psnr=18.90572738647461
+2022-05-12 17:25:56,022 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:25:59,343 - root - INFO - print_n_log() - 	loss=0.025550348684191704
+2022-05-12 17:26:00,003 - root - INFO - print_n_log() - 	psnr=19.765457153320312
+2022-05-12 17:26:00,003 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:26:04,158 - root - INFO - print_n_log() - 	loss=0.02336708828806877
+2022-05-12 17:26:04,752 - root - INFO - print_n_log() - 	psnr=20.341838836669922
+2022-05-12 17:26:04,753 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:26:08,583 - root - INFO - print_n_log() - 	loss=0.02207092195749283
+2022-05-12 17:26:09,176 - root - INFO - print_n_log() - 	psnr=20.589256286621094
+2022-05-12 17:26:09,176 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:26:12,904 - root - INFO - print_n_log() - 	loss=0.021293915808200836
+2022-05-12 17:26:13,508 - root - INFO - print_n_log() - 	psnr=20.87345314025879
+2022-05-12 17:26:13,509 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:26:16,952 - root - INFO - print_n_log() - 	loss=0.020793095231056213
+2022-05-12 17:26:17,512 - root - INFO - print_n_log() - 	psnr=21.357887268066406
+2022-05-12 17:26:17,512 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:26:21,173 - root - INFO - print_n_log() - 	loss=0.020431818440556526
+2022-05-12 17:26:21,735 - root - INFO - print_n_log() - 	psnr=21.883878707885742
+2022-05-12 17:26:21,735 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:26:25,433 - root - INFO - print_n_log() - 	loss=0.020142635330557823
+2022-05-12 17:26:26,074 - root - INFO - print_n_log() - 	psnr=22.30165672302246
+2022-05-12 17:27:09,099 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:27:12,271 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:27:16,490 - root - INFO - print_n_log() - 	loss=0.11483962833881378
+2022-05-12 17:27:17,287 - root - INFO - print_n_log() - 	psnr=17.4378662109375
+2022-05-12 17:27:17,288 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:27:20,607 - root - INFO - print_n_log() - 	loss=0.02431645616889
+2022-05-12 17:27:21,295 - root - INFO - print_n_log() - 	psnr=20.76459503173828
+2022-05-12 17:27:21,296 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:27:27,310 - root - INFO - print_n_log() - 	loss=0.02064206451177597
+2022-05-12 17:27:28,178 - root - INFO - print_n_log() - 	psnr=21.660781860351562
+2022-05-12 17:27:28,178 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:27:32,573 - root - INFO - print_n_log() - 	loss=0.01951088197529316
+2022-05-12 17:27:33,246 - root - INFO - print_n_log() - 	psnr=22.127315521240234
+2022-05-12 17:27:33,247 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:27:36,641 - root - INFO - print_n_log() - 	loss=0.018926316872239113
+2022-05-12 17:27:37,349 - root - INFO - print_n_log() - 	psnr=22.42153549194336
+2022-05-12 17:27:37,350 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:27:42,238 - root - INFO - print_n_log() - 	loss=0.018568264320492744
+2022-05-12 17:27:43,375 - root - INFO - print_n_log() - 	psnr=22.626943588256836
+2022-05-12 17:27:43,375 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:27:47,096 - root - INFO - print_n_log() - 	loss=0.01832542009651661
+2022-05-12 17:27:47,675 - root - INFO - print_n_log() - 	psnr=22.778701782226562
+2022-05-12 17:27:47,676 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:27:51,286 - root - INFO - print_n_log() - 	loss=0.018149662762880325
+2022-05-12 17:27:51,893 - root - INFO - print_n_log() - 	psnr=22.895954132080078
+2022-05-12 17:27:51,894 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:27:55,239 - root - INFO - print_n_log() - 	loss=0.018017377704381943
+2022-05-12 17:27:55,837 - root - INFO - print_n_log() - 	psnr=22.986865997314453
+2022-05-12 17:27:55,838 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:27:59,098 - root - INFO - print_n_log() - 	loss=0.017913904041051865
+2022-05-12 17:27:59,680 - root - INFO - print_n_log() - 	psnr=23.060428619384766
+2022-05-12 17:28:10,606 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:28:12,849 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:28:15,815 - root - INFO - print_n_log() - 	loss=0.039273329079151154
+2022-05-12 17:28:16,272 - root - INFO - print_n_log() - 	psnr=23.266368865966797
+2022-05-12 17:28:16,273 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:28:19,326 - root - INFO - print_n_log() - 	loss=0.015808045864105225
+2022-05-12 17:28:19,948 - root - INFO - print_n_log() - 	psnr=24.05352783203125
+2022-05-12 17:28:19,948 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:28:22,684 - root - INFO - print_n_log() - 	loss=0.015335270203649998
+2022-05-12 17:28:23,099 - root - INFO - print_n_log() - 	psnr=24.355228424072266
+2022-05-12 17:28:23,100 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:28:26,457 - root - INFO - print_n_log() - 	loss=0.01513463631272316
+2022-05-12 17:28:27,074 - root - INFO - print_n_log() - 	psnr=24.50190544128418
+2022-05-12 17:28:27,075 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:28:30,113 - root - INFO - print_n_log() - 	loss=0.015031642280519009
+2022-05-12 17:28:30,594 - root - INFO - print_n_log() - 	psnr=24.58670425415039
+2022-05-12 17:28:30,594 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:28:33,473 - root - INFO - print_n_log() - 	loss=0.014969947747886181
+2022-05-12 17:28:33,929 - root - INFO - print_n_log() - 	psnr=24.63498878479004
+2022-05-12 17:28:33,930 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:28:36,955 - root - INFO - print_n_log() - 	loss=0.014930814504623413
+2022-05-12 17:28:37,452 - root - INFO - print_n_log() - 	psnr=24.673389434814453
+2022-05-12 17:28:37,453 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:28:40,573 - root - INFO - print_n_log() - 	loss=0.01490163616836071
+2022-05-12 17:28:41,043 - root - INFO - print_n_log() - 	psnr=24.71438980102539
+2022-05-12 17:28:41,044 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:28:44,621 - root - INFO - print_n_log() - 	loss=0.01488043088465929
+2022-05-12 17:28:45,158 - root - INFO - print_n_log() - 	psnr=24.737438201904297
+2022-05-12 17:28:45,159 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:28:48,268 - root - INFO - print_n_log() - 	loss=0.014867541380226612
+2022-05-12 17:28:48,799 - root - INFO - print_n_log() - 	psnr=24.751953125
+2022-05-12 17:30:10,205 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:30:12,376 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:30:16,638 - root - INFO - print_n_log() - 	loss=0.09395477920770645
+2022-05-12 17:30:17,301 - root - INFO - print_n_log() - 	psnr=17.120220184326172
+2022-05-12 17:30:17,303 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:30:20,841 - root - INFO - print_n_log() - 	loss=0.026030458509922028
+2022-05-12 17:30:21,529 - root - INFO - print_n_log() - 	psnr=20.190649032592773
+2022-05-12 17:30:21,530 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:30:25,026 - root - INFO - print_n_log() - 	loss=0.021110694855451584
+2022-05-12 17:30:25,630 - root - INFO - print_n_log() - 	psnr=21.395668029785156
+2022-05-12 17:30:25,631 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:30:32,486 - root - INFO - print_n_log() - 	loss=0.01968839019536972
+2022-05-12 17:30:33,071 - root - INFO - print_n_log() - 	psnr=21.99033546447754
+2022-05-12 17:30:33,071 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:30:37,044 - root - INFO - print_n_log() - 	loss=0.01899753138422966
+2022-05-12 17:30:37,669 - root - INFO - print_n_log() - 	psnr=22.33611297607422
+2022-05-12 17:30:37,670 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:30:41,296 - root - INFO - print_n_log() - 	loss=0.018587948754429817
+2022-05-12 17:30:41,978 - root - INFO - print_n_log() - 	psnr=22.56532859802246
+2022-05-12 17:30:41,978 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:30:46,222 - root - INFO - print_n_log() - 	loss=0.018313804641366005
+2022-05-12 17:30:46,837 - root - INFO - print_n_log() - 	psnr=22.731447219848633
+2022-05-12 17:30:46,838 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:30:50,447 - root - INFO - print_n_log() - 	loss=0.018117746338248253
+2022-05-12 17:30:51,070 - root - INFO - print_n_log() - 	psnr=22.85683822631836
+2022-05-12 17:30:51,070 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:30:54,661 - root - INFO - print_n_log() - 	loss=0.017971595749258995
+2022-05-12 17:30:55,261 - root - INFO - print_n_log() - 	psnr=22.953319549560547
+2022-05-12 17:30:55,261 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:30:58,810 - root - INFO - print_n_log() - 	loss=0.017858974635601044
+2022-05-12 17:30:59,419 - root - INFO - print_n_log() - 	psnr=23.02898406982422
+2022-05-12 17:32:47,518 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:32:49,836 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:32:53,373 - root - INFO - print_n_log() - 	loss=0.06749079376459122
+2022-05-12 17:32:53,953 - root - INFO - print_n_log() - 	psnr=19.340299606323242
+2022-05-12 17:32:53,954 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:32:57,330 - root - INFO - print_n_log() - 	loss=0.022011280059814453
+2022-05-12 17:32:57,931 - root - INFO - print_n_log() - 	psnr=21.571313858032227
+2022-05-12 17:32:57,932 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:33:01,336 - root - INFO - print_n_log() - 	loss=0.019515162333846092
+2022-05-12 17:33:02,149 - root - INFO - print_n_log() - 	psnr=22.305213928222656
+2022-05-12 17:33:02,151 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:33:06,594 - root - INFO - print_n_log() - 	loss=0.018631212413311005
+2022-05-12 17:33:07,157 - root - INFO - print_n_log() - 	psnr=22.72169303894043
+2022-05-12 17:33:07,158 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:33:10,405 - root - INFO - print_n_log() - 	loss=0.018169274553656578
+2022-05-12 17:33:10,959 - root - INFO - print_n_log() - 	psnr=22.987964630126953
+2022-05-12 17:33:10,960 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:33:14,249 - root - INFO - print_n_log() - 	loss=0.017885012552142143
+2022-05-12 17:33:14,839 - root - INFO - print_n_log() - 	psnr=23.17122459411621
+2022-05-12 17:33:14,839 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:33:18,132 - root - INFO - print_n_log() - 	loss=0.01769380085170269
+2022-05-12 17:33:18,679 - root - INFO - print_n_log() - 	psnr=23.308984756469727
+2022-05-12 17:33:18,679 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:33:21,897 - root - INFO - print_n_log() - 	loss=0.017558040097355843
+2022-05-12 17:33:22,446 - root - INFO - print_n_log() - 	psnr=23.411531448364258
+2022-05-12 17:33:22,447 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:33:25,742 - root - INFO - print_n_log() - 	loss=0.017457718029618263
+2022-05-12 17:33:26,296 - root - INFO - print_n_log() - 	psnr=23.494386672973633
+2022-05-12 17:33:26,296 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:33:30,659 - root - INFO - print_n_log() - 	loss=0.017381297424435616
+2022-05-12 17:33:31,243 - root - INFO - print_n_log() - 	psnr=23.56161117553711
+2022-05-12 17:34:51,666 - root - INFO - print_n_log() - === Using model3 ===
+2022-05-12 17:35:02,722 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 17:35:05,055 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:35:10,160 - root - INFO - print_n_log() - 	loss=0.02360394224524498
+2022-05-12 17:35:11,006 - root - INFO - print_n_log() - 	psnr=23.44434356689453
+2022-05-12 17:35:11,007 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:35:17,099 - root - INFO - print_n_log() - 	loss=0.015697047114372253
+2022-05-12 17:35:17,937 - root - INFO - print_n_log() - 	psnr=24.154335021972656
+2022-05-12 17:35:17,938 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:35:23,075 - root - INFO - print_n_log() - 	loss=0.015224074013531208
+2022-05-12 17:35:23,885 - root - INFO - print_n_log() - 	psnr=24.484539031982422
+2022-05-12 17:35:23,885 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:35:29,715 - root - INFO - print_n_log() - 	loss=0.015061143785715103
+2022-05-12 17:35:30,761 - root - INFO - print_n_log() - 	psnr=24.589624404907227
+2022-05-12 17:35:30,761 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:35:36,428 - root - INFO - print_n_log() - 	loss=0.014977053739130497
+2022-05-12 17:35:37,237 - root - INFO - print_n_log() - 	psnr=24.650278091430664
+2022-05-12 17:35:37,238 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:35:43,362 - root - INFO - print_n_log() - 	loss=0.014928329735994339
+2022-05-12 17:35:44,171 - root - INFO - print_n_log() - 	psnr=24.714675903320312
+2022-05-12 17:35:44,172 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:35:49,228 - root - INFO - print_n_log() - 	loss=0.014899114146828651
+2022-05-12 17:35:50,023 - root - INFO - print_n_log() - 	psnr=24.748533248901367
+2022-05-12 17:35:50,023 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:35:55,040 - root - INFO - print_n_log() - 	loss=0.014881757088005543
+2022-05-12 17:35:55,853 - root - INFO - print_n_log() - 	psnr=24.778247833251953
+2022-05-12 17:35:55,853 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:36:00,877 - root - INFO - print_n_log() - 	loss=0.014863715507090092
+2022-05-12 17:36:01,664 - root - INFO - print_n_log() - 	psnr=24.79050064086914
+2022-05-12 17:36:01,664 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:36:06,651 - root - INFO - print_n_log() - 	loss=0.014852461405098438
+2022-05-12 17:36:07,440 - root - INFO - print_n_log() - 	psnr=24.806577682495117
+2022-05-12 17:37:31,402 - root - INFO - print_n_log() - === Using model5 ===
+2022-05-12 17:37:34,865 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:38:13,076 - root - INFO - print_n_log() - 	loss=0.12303990870714188
+2022-05-12 17:39:08,475 - root - INFO - print_n_log() - 	psnr=10.869091987609863
+2022-05-12 17:39:08,477 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:39:46,035 - root - INFO - print_n_log() - 	loss=0.1027938649058342
+2022-05-12 17:40:35,291 - root - INFO - print_n_log() - 	psnr=10.946745872497559
+2022-05-12 17:40:35,292 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:41:13,252 - root - INFO - print_n_log() - 	loss=0.10153651237487793
+2022-05-12 17:42:06,039 - root - INFO - print_n_log() - 	psnr=10.985217094421387
+2022-05-12 17:42:06,039 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:42:49,410 - root - INFO - print_n_log() - === Using model5 ===
+2022-05-12 17:42:52,482 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:43:00,941 - root - INFO - print_n_log() - 	loss=0.03390621021389961
+2022-05-12 17:43:02,347 - root - INFO - print_n_log() - 	psnr=22.541200637817383
+2022-05-12 17:43:02,347 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:43:10,749 - root - INFO - print_n_log() - 	loss=0.016597669571638107
+2022-05-12 17:43:12,163 - root - INFO - print_n_log() - 	psnr=23.584640502929688
+2022-05-12 17:43:12,164 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:43:20,522 - root - INFO - print_n_log() - 	loss=0.015752321109175682
+2022-05-12 17:43:21,926 - root - INFO - print_n_log() - 	psnr=24.038888931274414
+2022-05-12 17:43:21,926 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:43:30,294 - root - INFO - print_n_log() - 	loss=0.01538325846195221
+2022-05-12 17:43:31,767 - root - INFO - print_n_log() - 	psnr=24.358928680419922
+2022-05-12 17:43:31,767 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:43:42,196 - root - INFO - print_n_log() - 	loss=0.015199350193142891
+2022-05-12 17:43:44,035 - root - INFO - print_n_log() - 	psnr=24.468591690063477
+2022-05-12 17:43:44,035 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:43:53,841 - root - INFO - print_n_log() - 	loss=0.015080052427947521
+2022-05-12 17:43:55,260 - root - INFO - print_n_log() - 	psnr=24.61663818359375
+2022-05-12 17:43:55,261 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:44:03,645 - root - INFO - print_n_log() - 	loss=0.01502709649503231
+2022-05-12 17:44:05,045 - root - INFO - print_n_log() - 	psnr=24.59893798828125
+2022-05-12 17:44:05,045 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:44:14,975 - root - INFO - print_n_log() - 	loss=0.014980020932853222
+2022-05-12 17:44:16,756 - root - INFO - print_n_log() - 	psnr=24.625446319580078
+2022-05-12 17:44:16,756 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:44:25,739 - root - INFO - print_n_log() - 	loss=0.014954675920307636
+2022-05-12 17:44:27,500 - root - INFO - print_n_log() - 	psnr=24.676715850830078
+2022-05-12 17:44:27,501 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:44:37,403 - root - INFO - print_n_log() - 	loss=0.014908435754477978
+2022-05-12 17:44:38,842 - root - INFO - print_n_log() - 	psnr=24.736234664916992
+2022-05-12 17:45:43,408 - root - INFO - print_n_log() - === Using model2v1 ===
+2022-05-12 17:45:45,861 - root - INFO - print_n_log() - === Using model2v1 ===
+2022-05-12 17:45:47,903 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:45:51,252 - root - INFO - print_n_log() - 	loss=0.027727920562028885
+2022-05-12 17:45:51,690 - root - INFO - print_n_log() - 	psnr=23.17478370666504
+2022-05-12 17:45:51,690 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:45:54,432 - root - INFO - print_n_log() - 	loss=0.01594642363488674
+2022-05-12 17:45:55,074 - root - INFO - print_n_log() - 	psnr=23.99301528930664
+2022-05-12 17:45:55,074 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:45:58,357 - root - INFO - print_n_log() - 	loss=0.015387631952762604
+2022-05-12 17:45:58,786 - root - INFO - print_n_log() - 	psnr=24.332813262939453
+2022-05-12 17:45:58,786 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:46:01,586 - root - INFO - print_n_log() - 	loss=0.015169495716691017
+2022-05-12 17:46:02,008 - root - INFO - print_n_log() - 	psnr=24.486148834228516
+2022-05-12 17:46:02,008 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:46:05,152 - root - INFO - print_n_log() - 	loss=0.015057995915412903
+2022-05-12 17:46:05,790 - root - INFO - print_n_log() - 	psnr=24.556137084960938
+2022-05-12 17:46:05,791 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:46:08,906 - root - INFO - print_n_log() - 	loss=0.014993737451732159
+2022-05-12 17:46:09,378 - root - INFO - print_n_log() - 	psnr=24.594070434570312
+2022-05-12 17:46:09,378 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:46:12,370 - root - INFO - print_n_log() - 	loss=0.014953693374991417
+2022-05-12 17:46:12,864 - root - INFO - print_n_log() - 	psnr=24.599267959594727
+2022-05-12 17:46:12,865 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:46:16,069 - root - INFO - print_n_log() - 	loss=0.014922535046935081
+2022-05-12 17:46:16,600 - root - INFO - print_n_log() - 	psnr=24.68769073486328
+2022-05-12 17:46:16,601 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:46:19,202 - root - INFO - print_n_log() - 	loss=0.0149002093821764
+2022-05-12 17:46:19,651 - root - INFO - print_n_log() - 	psnr=24.708263397216797
+2022-05-12 17:46:19,651 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:46:22,257 - root - INFO - print_n_log() - 	loss=0.014886698685586452
+2022-05-12 17:46:22,687 - root - INFO - print_n_log() - 	psnr=24.726280212402344
+2022-05-12 17:47:40,343 - root - INFO - print_n_log() - === Using model2v2 ===
+2022-05-12 17:47:42,166 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:47:45,192 - root - INFO - print_n_log() - 	loss=0.02807624451816082
+2022-05-12 17:47:45,641 - root - INFO - print_n_log() - 	psnr=23.399198532104492
+2022-05-12 17:47:45,642 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:47:48,344 - root - INFO - print_n_log() - 	loss=0.015697015449404716
+2022-05-12 17:47:48,785 - root - INFO - print_n_log() - 	psnr=24.176748275756836
+2022-05-12 17:47:48,785 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:47:51,667 - root - INFO - print_n_log() - 	loss=0.015235266648232937
+2022-05-12 17:47:52,132 - root - INFO - print_n_log() - 	psnr=24.45603370666504
+2022-05-12 17:47:52,132 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:47:54,751 - root - INFO - print_n_log() - 	loss=0.015056758187711239
+2022-05-12 17:47:55,202 - root - INFO - print_n_log() - 	psnr=24.5938720703125
+2022-05-12 17:47:55,202 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:47:57,836 - root - INFO - print_n_log() - 	loss=0.0149652399122715
+2022-05-12 17:47:58,275 - root - INFO - print_n_log() - 	psnr=24.668569564819336
+2022-05-12 17:47:58,275 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:48:01,330 - root - INFO - print_n_log() - 	loss=0.014916353859007359
+2022-05-12 17:48:02,021 - root - INFO - print_n_log() - 	psnr=24.69976043701172
+2022-05-12 17:48:02,021 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:48:05,236 - root - INFO - print_n_log() - 	loss=0.014890813268721104
+2022-05-12 17:48:05,719 - root - INFO - print_n_log() - 	psnr=24.721099853515625
+2022-05-12 17:48:05,719 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 17:48:09,429 - root - INFO - print_n_log() - 	loss=0.014873873442411423
+2022-05-12 17:48:09,901 - root - INFO - print_n_log() - 	psnr=24.73728370666504
+2022-05-12 17:48:09,902 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 17:48:12,518 - root - INFO - print_n_log() - 	loss=0.014861260540783405
+2022-05-12 17:48:12,965 - root - INFO - print_n_log() - 	psnr=24.74601936340332
+2022-05-12 17:48:12,966 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 17:48:15,522 - root - INFO - print_n_log() - 	loss=0.014851524494588375
+2022-05-12 17:48:15,965 - root - INFO - print_n_log() - 	psnr=24.739974975585938
+2022-05-12 17:53:00,401 - root - INFO - print_n_log() - === Using model_polling1 ===
+2022-05-12 17:53:07,615 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:54:02,633 - root - INFO - print_n_log() - === Using model_polling1 ===
+2022-05-12 17:54:06,813 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:55:27,497 - root - INFO - print_n_log() - === Using model_polling1 ===
+2022-05-12 17:55:35,675 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:56:00,858 - root - INFO - print_n_log() - === Using model_polling1 ===
+2022-05-12 17:56:03,106 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 17:56:32,259 - root - INFO - print_n_log() - 	loss=0.025255519896745682
+2022-05-12 17:56:35,669 - root - INFO - print_n_log() - 	psnr=23.158935546875
+2022-05-12 17:56:35,669 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 17:57:05,992 - root - INFO - print_n_log() - 	loss=0.016207030043005943
+2022-05-12 17:57:08,584 - root - INFO - print_n_log() - 	psnr=23.685701370239258
+2022-05-12 17:57:08,585 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 17:57:34,671 - root - INFO - print_n_log() - 	loss=0.015806371346116066
+2022-05-12 17:57:37,180 - root - INFO - print_n_log() - 	psnr=23.868406295776367
+2022-05-12 17:57:37,181 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 17:58:04,588 - root - INFO - print_n_log() - 	loss=0.01556896511465311
+2022-05-12 17:58:07,062 - root - INFO - print_n_log() - 	psnr=24.024639129638672
+2022-05-12 17:58:07,063 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 17:58:32,819 - root - INFO - print_n_log() - 	loss=0.015442447736859322
+2022-05-12 17:58:35,576 - root - INFO - print_n_log() - 	psnr=24.124422073364258
+2022-05-12 17:58:35,576 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 17:59:00,958 - root - INFO - print_n_log() - 	loss=0.015339523553848267
+2022-05-12 17:59:03,406 - root - INFO - print_n_log() - 	psnr=24.145612716674805
+2022-05-12 17:59:03,406 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 17:59:32,598 - root - INFO - print_n_log() - 	loss=0.015278032049536705
+2022-05-12 17:59:35,687 - root - INFO - print_n_log() - 	psnr=24.15723991394043
+2022-05-12 17:59:35,688 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 18:00:02,128 - root - INFO - print_n_log() - 	loss=0.015202846378087997
+2022-05-12 18:00:04,382 - root - INFO - print_n_log() - 	psnr=24.24454689025879
+2022-05-12 18:00:04,383 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 18:00:29,138 - root - INFO - print_n_log() - 	loss=0.01515283714979887
+2022-05-12 18:00:31,408 - root - INFO - print_n_log() - 	psnr=24.410846710205078
+2022-05-12 18:00:31,408 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 18:00:56,202 - root - INFO - print_n_log() - 	loss=0.015116827562451363
+2022-05-12 18:00:58,451 - root - INFO - print_n_log() - 	psnr=24.311983108520508
+2022-05-12 18:10:52,740 - root - INFO - print_n_log() - === Using model1 ===
+2022-05-12 18:10:54,857 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 18:10:56,471 - root - INFO - print_n_log() - 	loss=0.030094116926193237
+2022-05-12 18:10:56,575 - root - INFO - print_n_log() - 	psnr=22.50701904296875
+2022-05-12 18:10:56,575 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 18:10:58,157 - root - INFO - print_n_log() - 	loss=0.016739582642912865
+2022-05-12 18:10:58,268 - root - INFO - print_n_log() - 	psnr=23.484867095947266
+2022-05-12 18:10:58,268 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 18:10:59,771 - root - INFO - print_n_log() - 	loss=0.01607448421418667
+2022-05-12 18:10:59,881 - root - INFO - print_n_log() - 	psnr=23.7044620513916
+2022-05-12 18:10:59,883 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 18:11:00,629 - root - INFO - print_n_log() - 	loss=0.015946319326758385
+2022-05-12 18:11:00,683 - root - INFO - print_n_log() - 	psnr=23.753143310546875
+2022-05-12 18:11:00,683 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 18:11:01,751 - root - INFO - print_n_log() - 	loss=0.01592348888516426
+2022-05-12 18:11:01,858 - root - INFO - print_n_log() - 	psnr=23.76236343383789
+2022-05-12 18:11:01,861 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 18:11:02,563 - root - INFO - print_n_log() - 	loss=0.015922438353300095
+2022-05-12 18:11:02,614 - root - INFO - print_n_log() - 	psnr=23.75892448425293
+2022-05-12 18:11:02,614 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 18:11:03,329 - root - INFO - print_n_log() - 	loss=0.01592603139579296
+2022-05-12 18:11:03,376 - root - INFO - print_n_log() - 	psnr=23.751497268676758
+2022-05-12 18:11:03,376 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 18:11:04,146 - root - INFO - print_n_log() - 	loss=0.015930308029055595
+2022-05-12 18:11:04,193 - root - INFO - print_n_log() - 	psnr=23.747364044189453
+2022-05-12 18:11:04,194 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 18:11:04,938 - root - INFO - print_n_log() - 	loss=0.015934012830257416
+2022-05-12 18:11:04,984 - root - INFO - print_n_log() - 	psnr=23.745922088623047
+2022-05-12 18:11:04,985 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 18:11:06,025 - root - INFO - print_n_log() - 	loss=0.015937140211462975
+2022-05-12 18:11:06,077 - root - INFO - print_n_log() - 	psnr=23.74495506286621
+2022-05-12 18:23:53,428 - root - INFO - print_n_log() - === Using model1 ===
+2022-05-12 18:24:00,874 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 18:24:04,503 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 18:26:08,958 - root - INFO - print_n_log() - 	loss=0.016558218747377396
+2022-05-12 18:26:11,842 - root - INFO - print_n_log() - 	psnr=24.84983253479004
+2022-05-12 18:26:11,843 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 18:27:45,636 - root - INFO - print_n_log() - 	loss=0.01493314653635025
+2022-05-12 18:27:47,203 - root - INFO - print_n_log() - 	psnr=24.92911148071289
+2022-05-12 18:27:47,203 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 18:29:24,597 - root - INFO - print_n_log() - 	loss=0.014885634183883667
+2022-05-12 18:29:26,270 - root - INFO - print_n_log() - 	psnr=24.938663482666016
+2022-05-12 18:29:26,271 - root - INFO - print_n_log() - Epoch -> 3
