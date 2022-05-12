@@ -1,0 +1,7 @@
+2022-05-12 19:14:50,923 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:16:30,608 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:16:34,118 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 19:16:53,143 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:18:25,512 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:18:28,457 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:18:32,864 - root - INFO - print_n_log() - Epoch -> 0

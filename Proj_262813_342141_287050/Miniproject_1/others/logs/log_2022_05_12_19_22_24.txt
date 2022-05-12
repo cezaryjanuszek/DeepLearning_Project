@@ -1,0 +1,31 @@
+2022-05-12 19:22:33,860 - root - INFO - print_n_log() - === Using model4 ===
+2022-05-12 19:22:33,958 - root - INFO - print_n_log() - Epoch -> 0
+2022-05-12 19:23:26,287 - root - INFO - print_n_log() - 	loss=0.016378065571188927
+2022-05-12 19:23:26,649 - root - INFO - print_n_log() - 	psnr=24.807823181152344
+2022-05-12 19:23:26,649 - root - INFO - print_n_log() - Epoch -> 1
+2022-05-12 19:24:06,907 - root - INFO - print_n_log() - 	loss=0.01496211439371109
+2022-05-12 19:24:07,280 - root - INFO - print_n_log() - 	psnr=24.88154411315918
+2022-05-12 19:24:07,280 - root - INFO - print_n_log() - Epoch -> 2
+2022-05-12 19:24:47,686 - root - INFO - print_n_log() - 	loss=0.014906564727425575
+2022-05-12 19:24:48,049 - root - INFO - print_n_log() - 	psnr=24.93802261352539
+2022-05-12 19:24:48,050 - root - INFO - print_n_log() - Epoch -> 3
+2022-05-12 19:25:24,370 - root - INFO - print_n_log() - 	loss=0.01488313265144825
+2022-05-12 19:25:24,720 - root - INFO - print_n_log() - 	psnr=24.886093139648438
+2022-05-12 19:25:24,720 - root - INFO - print_n_log() - Epoch -> 4
+2022-05-12 19:26:01,372 - root - INFO - print_n_log() - 	loss=0.014867122285068035
+2022-05-12 19:26:01,744 - root - INFO - print_n_log() - 	psnr=24.805095672607422
+2022-05-12 19:26:01,745 - root - INFO - print_n_log() - Epoch -> 5
+2022-05-12 19:26:39,420 - root - INFO - print_n_log() - 	loss=0.01484181359410286
+2022-05-12 19:26:39,853 - root - INFO - print_n_log() - 	psnr=24.79021453857422
+2022-05-12 19:26:39,853 - root - INFO - print_n_log() - Epoch -> 6
+2022-05-12 19:27:20,052 - root - INFO - print_n_log() - 	loss=0.01481850165873766
+2022-05-12 19:27:20,425 - root - INFO - print_n_log() - 	psnr=24.931602478027344
+2022-05-12 19:27:20,425 - root - INFO - print_n_log() - Epoch -> 7
+2022-05-12 19:28:01,087 - root - INFO - print_n_log() - 	loss=0.014809804037213326
+2022-05-12 19:28:01,498 - root - INFO - print_n_log() - 	psnr=24.999530792236328
+2022-05-12 19:28:01,499 - root - INFO - print_n_log() - Epoch -> 8
+2022-05-12 19:28:42,237 - root - INFO - print_n_log() - 	loss=0.014803417958319187
+2022-05-12 19:28:42,663 - root - INFO - print_n_log() - 	psnr=25.01945686340332
+2022-05-12 19:28:42,664 - root - INFO - print_n_log() - Epoch -> 9
+2022-05-12 19:29:26,467 - root - INFO - print_n_log() - 	loss=0.014798262156546116
+2022-05-12 19:29:26,913 - root - INFO - print_n_log() - 	psnr=25.024911880493164
