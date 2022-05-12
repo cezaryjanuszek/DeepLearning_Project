@@ -1,0 +1,25 @@
+
+--PROJECT1--
+
+Cez
+- run test.py
+
+Unassigned
+- Write report: Experimentation results, attempt to explain observed trends, ...
+
+--PROJECT2--
+
+Me
+- ReLU, nn module
+- Convolution layer, nn module
+
+Cez
+- Sigmoid, nn module
+
+Tikhon
+- MSE, nn module
+- SGD, nn module
+
+Unassigned
+- Combine everything into a working model.py
+- Write report: explain architectural, implementation choises, successes and failures.
