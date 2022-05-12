@@ -24,7 +24,7 @@ class Conv2d(object):
         return []
 
 
-class ConvTranspose2d(object):
+class TransposeConv2d(object):
     def forward(self, *input):
         raise NotImplementedError
 
