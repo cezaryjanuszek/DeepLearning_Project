@@ -51,27 +51,47 @@ class Upsample(object):
 
 class ReLU(object):
     def forward(self, *input):
-        raise NotImplementedError
+
+        # Forward function
+        def forward(tens):
+            output = tens
+            output[output < 0] = 0
+            return output
+
+        # Apply forward function on either a single tensor or tuple of tensors
+        # and stores values needed for backward
+        if len(input) == 1:
+            self.forward_output = forward(input[0])
+        else:
+            self.forward_output = tuple(map(lambda tens: forward(tens), input))
+
+        return self.forward_output
 
     def backward(self, *gradwrtoutput):
-        raise NotImplementedError
+
+        # Backward function
+        def backward(forward_output, gradwrtoutput):
+
+            # gradient of ReLU function
+            grad = forward_output
+            grad[grad > 0] = 1
+            return grad * gradwrtoutput
+
+        # Apply backward function as needed
+        if len(gradwrtoutput) == 1:
+            return backward(self.forward_output, gradwrtoutput[0])
+        else:
+            bkw = []
+            for (forward_output, gradwrtoutput) in zip(self.forward_output, gradwrtoutput):
+                bkw.append(backward(forward_output, gradwrtoutput))
+            return tuple(bkw)
 
     def param(self):
+        # No parameters
         return []
 
 
 class Sigmoid(object):
-    def forward(self, *input):
-        raise NotImplementedError
-
-    def backward(self, *gradwrtoutput):
-        raise NotImplementedError
-
-    def param(self):
-        return []
-
-
-class ReLU(object):
     def forward(self, *input):
         raise NotImplementedError
 
