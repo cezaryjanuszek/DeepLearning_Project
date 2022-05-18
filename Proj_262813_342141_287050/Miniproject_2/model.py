@@ -11,6 +11,9 @@ import torch
 # torch.cuda.get_device_name(torch.cuda.current_device())
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+
+torch.set_grad_enabled(False)
+
 # ===============================================================
 
 class Conv2d(object):
@@ -24,6 +27,8 @@ class Conv2d(object):
         return []
 
 
+# Implemented either TransposeConv2d or Upsample
+
 class TransposeConv2d(object):
     def forward(self, *input):
         raise NotImplementedError
@@ -36,8 +41,6 @@ class TransposeConv2d(object):
 
 
 class Upsample(object):
-
-    ## Just use ConvTranspose2d I would say. No need to implement anything new..
 
     def forward(self, *input):
         raise NotImplementedError
