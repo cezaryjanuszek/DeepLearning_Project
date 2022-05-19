@@ -7,6 +7,10 @@ Cez
 Unassigned
 - Write report: Experimentation results, attempt to explain observed trends, ...
 
+- Note for report: It may be worth using bias=False in conv2d layers. The argument for that
+is that the distribution of noise is centered on the real signal and thus
+no offset should actually be added!
+
 --PROJECT2--
 
 Me
