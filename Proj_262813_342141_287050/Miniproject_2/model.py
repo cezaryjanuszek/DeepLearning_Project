@@ -13,7 +13,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # ===============================================================
 
-class Conv2d(object):
+# Module class that the others will inherit from
+class Module(object):
     def forward(self, *input):
         raise NotImplementedError
 
@@ -24,7 +25,43 @@ class Conv2d(object):
         return []
 
 
-class TransposeConv2d(object):
+class Conv2d(Module):
+    def __init__(self, input_channels, output_channels, kernel_size, stride, padding):
+        self.input_channels = input_channels
+        self.output_channels = output_channels
+        self.kernel_size = kernel_size 
+        self.stride = stride
+        self.padding = padding
+
+        k_sqrt = (1/(input_channels*kernel_size[0]*kernel_size[1])) ** .5
+        self.weight = torch.empty((output_channels, input_channels, kernel_size[0], kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
+        self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
+
+    def forward(self, *input):
+
+        def apply_conv(tensor):
+            in_unfolded = unfold(tensor, self.kernel_size)
+            out_unfolded = self.weight.view(self.weight.size(0), -1) @ in_unfolded + self.bias.view(1, -1, 1)
+            ouput = out_unfolded.view(1, self.output_channels, tensor.shape[2]-self.kernel_size[0]+1, tensor.shape[3]-self.kernel_size[1]+1)
+            return ouput
+
+        # Apply forward function on either a single tensor or tuple of tensors
+        # and stores values needed for backward
+        if len(input) == 1:
+            self.forward_output = apply_conv(input[0])
+        else:
+            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
+
+        return self.forward_output
+
+    def backward(self, *gradwrtoutput):
+        raise NotImplementedError
+
+    def param(self):
+        return []
+
+
+class TransposeConv2d(Module):
     def forward(self, *input):
         raise NotImplementedError
 
