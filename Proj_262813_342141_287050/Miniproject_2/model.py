@@ -29,22 +29,37 @@ class Module(object):
 
 
 class Conv2d(Module):
-    def __init__(self, input_channels, output_channels, kernel_size, stride, padding):
+    def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
         self.input_channels = input_channels
         self.output_channels = output_channels
-        self.kernel_size = kernel_size 
+        
+        if type(kernel_size) is int:
+            self.kernel_size = (kernel_size, kernel_size)
+        else:
+            self.kernel_size = kernel_size 
+
         self.stride = stride
         self.padding = padding
 
-        k_sqrt = (1/(input_channels*kernel_size[0]*kernel_size[1])) ** .5
-        self.weight = torch.empty((output_channels, input_channels, kernel_size[0], kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
+        k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
+        self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
+
+        # gradient tensors 
+        self.weight_grad = torch.empty(self.weight.shape).zero_()
+        self.bias_grad = torch.empty(self.bias.shape).zero_()
+        # for backward pass computation
+        self.prev_x = None
 
     def forward(self, *input):
 
+        # take into account padding and stride
+            
         def apply_conv(tensor):
-            in_unfolded = unfold(tensor, self.kernel_size)
-            out_unfolded = self.weight.view(self.weight.size(0), -1) @ in_unfolded + self.bias.view(1, -1, 1)
+            self.prev_x = tensor
+
+            in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
+            out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
             ouput = out_unfolded.view(1, self.output_channels, tensor.shape[2]-self.kernel_size[0]+1, tensor.shape[3]-self.kernel_size[1]+1)
             return ouput
 
@@ -58,21 +73,78 @@ class Conv2d(Module):
         return self.forward_output
 
     def backward(self, *gradwrtoutput):
-        raise NotImplementedError
+        
+        def backward_pass(gradwrtoutput):
+            self.weight_grad += gradwrtoutput @ self.prev_x.t()
+            self.bias_grad += gradwrtoutput.sum(0)
+
+            return self.weight.t() * gradwrtoutput
+
+        # Apply backward function as needed
+        if len(gradwrtoutput) == 1:
+            return backward_pass(gradwrtoutput[0])
+        else:
+            return tuple(map(lambda grad: backward_pass(grad), input))
 
     def param(self):
-        return []
+        return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
 
 
 class TransposeConv2d(Module):
+    def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
+        # like for Conv2d
+        self.input_channels = input_channels
+        self.output_channels = output_channels
+        if type(kernel_size) is int:
+            self.kernel_size = (kernel_size, kernel_size)
+        else:
+            self.kernel_size = kernel_size 
+        self.stride = stride
+        self.padding = padding
+
+        k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
+        self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
+        self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
+
+        # gradient tensors 
+        self.weight_grad = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
+        self.bias_grad = torch.empty(output_channels).zero_()
+        # for backward pass computation
+        self.prev_x = None
+
     def forward(self, *input):
-        raise NotImplementedError
+        
+        def apply_conv(tensor):
+            self.prev_x = tensor
+
+            #@TODO
+            output = tensor
+            
+            return output
+ 
+
+        if len(input) == 1:
+            self.forward_output = apply_conv(input[0])
+        else:
+            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
+
+        return self.forward_output
 
     def backward(self, *gradwrtoutput):
-        raise NotImplementedError
+        def backward_pass(gradwrtoutput):
+            self.weight_grad += gradwrtoutput @ self.prev_x.t()
+            self.bias_grad += gradwrtoutput.sum(0)
+
+            return self.weight.t() * gradwrtoutput
+
+        # Apply backward function as needed
+        if len(gradwrtoutput) == 1:
+            return backward_pass(gradwrtoutput[0])
+        else:
+            return tuple(map(lambda grad: backward_pass(grad), input))
 
     def param(self):
-        return []
+        return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
 
 
 class Upsample(object):
@@ -139,7 +211,7 @@ class Sigmoid(object):
         # Forward function
         def forward(tens):
             output = tens
-            output = 1/(1+(E ** (-output)))
+            output = 1/(1+((-output).exp()))
             return output
 
         # Apply forward function on either a single tensor or tuple of tensors
