@@ -103,11 +103,11 @@ class TransposeConv2d(Module):
         self.padding = padding
 
         k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
-        self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
+        self.weight = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
 
         # gradient tensors 
-        self.weight_grad = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
+        self.weight_grad = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
         self.bias_grad = torch.empty(output_channels).zero_()
         # for backward pass computation
         self.prev_x = None
@@ -117,9 +117,9 @@ class TransposeConv2d(Module):
         def apply_conv(tensor):
             self.prev_x = tensor
 
-            #@TODO
-            output = tensor
-            
+            lin = (self.weight.view(self.input_channels, -1).t() @ tensor.view(self.input_channels, -1))
+            folded = fold(lin, (tensor.shape[2]+self.kernel_size[0]-1, tensor.shape[3]+self.kernel_size[1]-1), self.kernel_size)
+            output = folded.view(1, folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(1, self.output_channels, 1, 1)
             return output
  
 
@@ -147,13 +147,26 @@ class TransposeConv2d(Module):
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
 
 
-class Upsample(object):
+class NNUpsampling(object):
+
+    def __init__(self, scale_factor):
+        
+        self.scale_factor = scale_factor
 
     def forward(self, *input):
-        raise NotImplementedError
+        
+        def forward_pass(tensor):
+            pass
+        
+        if len(input) == 1:
+            self.forward_output = apply_conv(input[0])
+        else:
+            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
+
+        return self.forward_output
 
     def backward(self, *gradwrtoutput):
-        raise NotImplementedError
+        pass
 
     def param(self):
         return []
