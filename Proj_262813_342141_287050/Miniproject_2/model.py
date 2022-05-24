@@ -60,7 +60,7 @@ class Conv2d(Module):
 
             in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
-            ouput = out_unfolded.view(1, self.output_channels, tensor.shape[2]-self.kernel_size[0]+1, tensor.shape[3]-self.kernel_size[1]+1)
+            ouput = out_unfolded.view(tensor.shape[0], self.output_channels, tensor.shape[2]-self.kernel_size[0]+1, tensor.shape[3]-self.kernel_size[1]+1)
             return ouput
 
         # Apply forward function on either a single tensor or tuple of tensors
@@ -118,8 +118,8 @@ class TransposeConv2d(Module):
             self.prev_x = tensor
 
             lin = (self.weight.view(self.input_channels, -1).t() @ tensor.view(self.input_channels, -1))
-            folded = fold(lin, (tensor.shape[2]+self.kernel_size[0]-1, tensor.shape[3]+self.kernel_size[1]-1), self.kernel_size)
-            output = folded.view(1, folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(1, self.output_channels, 1, 1)
+            folded = fold(lin, output_size=(tensor.shape[2]+self.kernel_size[0]-1, tensor.shape[3]+self.kernel_size[1]-1), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
+            output = folded.view(tensor.shape[0], folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
             return output
  
 
