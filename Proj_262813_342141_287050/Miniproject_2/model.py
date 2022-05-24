@@ -29,6 +29,9 @@ class Module(object):
 
 
 class Conv2d(Module):
+    """
+    Class implementing 2d convolutional layer
+    """
     def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
         self.input_channels = input_channels
         self.output_channels = output_channels
@@ -91,6 +94,9 @@ class Conv2d(Module):
 
 
 class TransposeConv2d(Module):
+    """
+    Class implementing 2d transpose convolutional layer
+    """
     def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
         # like for Conv2d
         self.input_channels = input_channels
@@ -148,7 +154,6 @@ class TransposeConv2d(Module):
 
 
 class NNUpsampling(object):
-
     def __init__(self, scale_factor):
         
         self.scale_factor = scale_factor
@@ -173,10 +178,17 @@ class NNUpsampling(object):
 
 
 class ReLU(object):
+    """
+    Class implementing ReLU activation function
+    """
     def forward(self, *input):
 
-        # Forward function
         def forward(tens):
+            """
+            Forward pass
+            tens: output of layer, torch.tensor
+            return: torch.tensor after applying ReLU
+            """
             output = tens
             output[output < 0] = 0
             return output
@@ -191,10 +203,15 @@ class ReLU(object):
         return self.forward_output
 
     def backward(self, *gradwrtoutput):
-
+       
         # Backward function
         def backward(forward_output, gradwrtoutput):
-
+            """
+            Backward pass
+            forward_output: output of forward pass, torch.tensor
+            gradwrtoutput: gradient with regard to output, torch.tensor
+            return: torch.tensor
+            """
             # gradient of ReLU function
             grad = forward_output
             grad[grad > 0] = 1
@@ -273,16 +290,101 @@ class Sequential(object):
 # ---------------------------------------------------------------
 
 class MSE(object):
-    pass
+    def __init__(self):
+        """
+        MSE loss
+        """
+        self.y = None
+        self.target = None
+        self.e = None
+        self.n = None
 
+    def forward(self, y, target):
+        """
+        MSE computation
+        :param y: output of the final layer, torch.Tensor
+        :param target: target data, torch.Tensor
+        :returns: MSE(f(x), y) = Sum(e^2) / n, e = y - f(x)
+        """
+
+        self.y = y.clone()
+        self.target = target.clone()
+        self.e = (self.y - self.target)
+        self.n = self.y.size(0)
+
+        return self.e.pow(2).mean()
+
+    def backward(self):
+        """
+        MSE gradient computation
+        :returns: Grad(MSE(f(x), y)) = 2e / n, e = y - f(x)
+        """
+
+        return 2 * self.e / self.n
+    
+    def param(self):
+        #No parameters
+        return []
 
 # ---------------------------------------------------------------
 
-
 class SGD(object):
-    pass
+    """
+    Class implementing mini-batch SGD optimization
+    """
 
+    def __init__(self, model, nb_epochs=50, mini_batch_size=1, lr=1, criterion=MSE()):
+        """
+        SGD constructor
+        :param model: the model to train
+        :param nb_epochs: maximum number of training epochs, positive int, optional, default is 50
+        :param mini_batch_size: number of samples per mini-batch, int in [1, num_train_samples], optional, default is 1
+        :param lr: learning rate, positive float, optional, default is 1e-2
+        :param criterion: loss function to optimize, models.Module object, optional, default is criteria.LossMSE
+        """
+        
+        if not isinstance(nb_epochs, int) or nb_epochs <= 0:
+            raise ValueError("Number of training epochs must be a positive integer")
+        if not isinstance(mini_batch_size, int) or mini_batch_size <= 0:
+            raise ValueError("Mini-batch size must be a positive integer")
+        if not isinstance(lr, float) or lr <= 0:
+            raise ValueError("Learning rate must be a positive number")
+        
+        self.model = model
+        self.nb_epochs = nb_epochs
+        self.lr = lr
+        self.mini_batch_size = mini_batch_size
+        self.criterion = criterion
 
+    def step(self):
+        a=self.model.param()
+        a[0][0].sub_(self.lr*a[0][1])
+        a[1][0].sub_(self.lr*a[1][1])
+        
+    def train(self,train_input,train_target):
+        """
+        Function implementing the mini-batch training procedure
+        :param train_input: torch.Tensor with train input data
+        :param train_target: torch.Tensor with train target data
+        :returns: the trained model
+        """
+
+        for e in range(self.nb_epochs):
+            sum_loss = 0.
+
+            for b in range(0, train_input.size(0), self.mini_batch_size):
+                output = self.model.forward(train_input.narrow(0, b, self.mini_batch_size))
+                loss = self.criterion.forward(output, train_target.narrow(0, b, self.mini_batch_size))
+
+                sum_loss += loss
+
+                l_grad = self.criterion.backward()
+                self.model.backward(l_grad)
+                self.step()
+
+            print("{} iteration: loss={}".format(e, sum_loss))
+            
+        return self.model
 
 # ===============================================================
 
