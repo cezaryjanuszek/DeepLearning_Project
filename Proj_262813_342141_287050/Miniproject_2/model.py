@@ -49,16 +49,16 @@ class Conv2d(Module):
         self.weight_grad = torch.empty(self.weight.shape).zero_()
         self.bias_grad = torch.empty(self.bias.shape).zero_()
         # for backward pass computation
-        self.prev_x = None
+        self.input_x = None
 
     def forward(self, *input):
 
         # take into account padding and stride
             
         def apply_conv(tensor):
-            self.prev_x = tensor
 
             in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
+            self.input_x = in_unfolded
             out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
             ouput = out_unfolded.view(tensor.shape[0], self.output_channels, tensor.shape[2]-self.kernel_size[0]+1, tensor.shape[3]-self.kernel_size[1]+1)
             return ouput
@@ -75,10 +75,10 @@ class Conv2d(Module):
     def backward(self, *gradwrtoutput):
         
         def backward_pass(gradwrtoutput):
-            self.weight_grad += gradwrtoutput @ self.prev_x.t()
+            self.weight_grad += self.input_x @ gradwrtoutput
             self.bias_grad += gradwrtoutput.sum(0)
 
-            return self.weight.t() * gradwrtoutput
+            return gradwrtoutput * self.weight.t()
 
         # Apply backward function as needed
         if len(gradwrtoutput) == 1:
@@ -110,18 +110,17 @@ class TransposeConv2d(Module):
         self.weight_grad = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
         self.bias_grad = torch.empty(output_channels).zero_()
         # for backward pass computation
-        self.prev_x = None
+        self.input_x = None
 
     def forward(self, *input):
         
         def apply_conv(tensor):
-            self.prev_x = tensor
+            self.input_x = tensor
 
             lin = (self.weight.view(self.input_channels, -1).t() @ tensor.view(self.input_channels, -1))
             folded = fold(lin, output_size=(tensor.shape[2]+self.kernel_size[0]-1, tensor.shape[3]+self.kernel_size[1]-1), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             output = folded.view(tensor.shape[0], folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
             return output
- 
 
         if len(input) == 1:
             self.forward_output = apply_conv(input[0])
@@ -131,8 +130,9 @@ class TransposeConv2d(Module):
         return self.forward_output
 
     def backward(self, *gradwrtoutput):
+        
         def backward_pass(gradwrtoutput):
-            self.weight_grad += gradwrtoutput @ self.prev_x.t()
+            self.weight_grad += gradwrtoutput @ self.input_x.t()
             self.bias_grad += gradwrtoutput.sum(0)
 
             return self.weight.t() * gradwrtoutput
@@ -145,31 +145,6 @@ class TransposeConv2d(Module):
 
     def param(self):
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
-
-
-class NNUpsampling(object):
-
-    def __init__(self, scale_factor):
-        
-        self.scale_factor = scale_factor
-
-    def forward(self, *input):
-        
-        def forward_pass(tensor):
-            pass
-        
-        if len(input) == 1:
-            self.forward_output = apply_conv(input[0])
-        else:
-            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
-
-        return self.forward_output
-
-    def backward(self, *gradwrtoutput):
-        pass
-
-    def param(self):
-        return []
 
 
 class ReLU(object):
