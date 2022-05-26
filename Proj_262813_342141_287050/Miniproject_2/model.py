@@ -1,16 +1,10 @@
 
-# from torch import nn
-# from torch.nn import functional as F
-# from torch import optim
-
-
-from turtle import backward
 from torch import empty, cat, arange
 from torch.nn.functional import fold, unfold
 import math
 
 import torch
-# torch.cuda.get_device_name(torch.cuda.current_device())
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 torch.set_grad_enabled(False)
@@ -73,16 +67,18 @@ class Conv2d(Module):
         input = input[0]
 
         def apply_conv(tensor):
-
+            # save input for backward pass
             self.input_x = tensor
 
+            # convolution in all its beauty
             in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
 
             h_out = math.ceil( ((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0]) + 1)
             w_out = math.ceil( ((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1]) + 1)
-            
+    
             output = out_unfolded.view(tensor.shape[0], self.output_channels, h_out, w_out)
+            #output = fold(out_unfolded, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             
             return output
 
@@ -103,6 +99,7 @@ class Conv2d(Module):
 
             input_x_unfolded = unfold(self.input_x, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
 
+            # accumulate the gradients
             self.weight_grad += (gradwrtoutput.view(self.output_channels, -1) @ input_x_unfolded.squeeze(0).t()).view(self.weight_grad.shape)
             self.bias_grad += gradwrtoutput.sum((0,2,3))
 
@@ -118,9 +115,10 @@ class Conv2d(Module):
 
         return cat(backward_output)
         
-
     def param(self):
+        # return tuples of parameter + its gradient
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
+
 
 ###################################################################
 
@@ -132,6 +130,7 @@ class Upsampling(Module):
         # like for Conv2d
         self.input_channels = input_channels
         self.output_channels = output_channels
+
         # if only an int size is give for kernel_size/stride/padding make a tuple from it 
         if type(kernel_size) is int:
             self.kernel_size = (kernel_size, kernel_size)
@@ -166,9 +165,10 @@ class Upsampling(Module):
         input = input[0]
         
         def apply_conv(tensor):
-            
+            # save input for backward pass
             self.input_x = tensor
 
+            # transpose convolution
             linear_operation = (self.weight.view(self.input_channels, -1).t() @ tensor.view(self.input_channels, -1))
 
             h_out = (tensor.shape[2] - 1) * self.stride[0] - (2*self.padding[0]) + self.kernel_size[0]
@@ -176,6 +176,7 @@ class Upsampling(Module):
 
             folded = fold(linear_operation, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             output = folded.view(tensor.shape[0], folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
+            
             return output
 
         output_list = []
@@ -210,6 +211,7 @@ class Upsampling(Module):
         return cat(backward_output)
 
     def param(self):
+        # return parameter + its gradient in a tuple
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
 
 
@@ -417,7 +419,6 @@ class SGD(object):
     def step(self):
 
         params=self.model.param()
-
         for p in params:
             p[0].sub_(self.lr * p[1])
             p[0].sub_(self.lr * p[1])
@@ -440,13 +441,13 @@ class SGD(object):
                 sum_loss += loss
 
                 l_grad = self.criterion.backward()
-                self.model.backward(l_grad)
+                g = self.model.backward(l_grad)
+                print("Gradient: ", g.count_nonzero())
                 self.step()
 
             print("{} iteration: loss={}".format(e, sum_loss))
             
         return self.model
-
 
 
 # ===============================================================
@@ -480,11 +481,12 @@ class Model ():
         #: train˙input : tensor of size (N, C, H, W) containing a noisy version of the images
         #: train˙target : tensor of size (N, C, H, W) containing another noisy version of the same images , which only differs from the input by their noise .
         mini_batch_size = 10
+        learning_rate = 1e-5
 
         #train_input.to(device)
         #train_target.to(device)
 
-        sgd = SGD(model=self.model, nb_epochs = num_epochs, mini_batch_size=mini_batch_size, criterion=self.loss)
+        sgd = SGD(model=self.model, nb_epochs = num_epochs, mini_batch_size=mini_batch_size, lr = learning_rate, criterion=self.loss)
         self.model = sgd.train(train_input, train_target)
 
 
