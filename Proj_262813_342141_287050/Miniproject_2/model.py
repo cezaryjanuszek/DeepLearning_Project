@@ -126,7 +126,7 @@ class Conv2d(Module):
 
 class Upsampling(Module):
     """
-    Class for implementing the Upsampling using the Transpose convolutional layer
+    Class for implementing the Upsampling layer using the Transpose convolutional
     """
     def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
         # like for Conv2d
@@ -211,6 +211,7 @@ class Upsampling(Module):
 
     def param(self):
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
+
 
 ########################################################################
 
@@ -414,9 +415,12 @@ class SGD(object):
         self.criterion = criterion
 
     def step(self):
-        a=self.model.param()
-        a[0][0].sub_(self.lr*a[0][1])
-        a[1][0].sub_(self.lr*a[1][1])
+
+        params=self.model.param()
+
+        for p in params:
+            p[0].sub_(self.lr * p[1])
+            p[0].sub_(self.lr * p[1])
         
     def train(self,train_input,train_target):
         """
@@ -449,6 +453,9 @@ class SGD(object):
 
 
 class Model ():
+    """
+    Final model
+    """
     def __init__(self) -> None :
         
         self.model = Sequential(
