@@ -2,8 +2,8 @@
 from . import model
 import torch
 
-noisy_imgs_1, noisy_imgs_2 = torch.load('../data/train_data.pkl')
-train_input, train_target = noisy_imgs_1.float()/255.0, noisy_imgs_2.float()/255.0
+noisy_imgs_1, noisy_imgs_2 = torch.load('../data/train_data.pickle')
+train_input, train_target = noisy_imgs_1.float(), noisy_imgs_2.float()
 
 model = model.Model()
 nb_epochs = 30
