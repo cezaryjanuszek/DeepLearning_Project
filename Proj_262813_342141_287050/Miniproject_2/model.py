@@ -4,6 +4,7 @@
 # from torch import optim
 
 
+from turtle import backward
 from torch import empty, cat, arange
 from torch.nn.functional import fold, unfold
 import math
@@ -12,7 +13,6 @@ import torch
 # torch.cuda.get_device_name(torch.cuda.current_device())
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-
 torch.set_grad_enabled(False)
 
 # ===============================================================
@@ -20,10 +20,10 @@ torch.set_grad_enabled(False)
 # Module class that the others will inherit from
 class Module(object):
     def forward(self, *input):
-        raise NotImplementedError
+        pass
 
     def backward(self, *gradwrtoutput):
-        raise NotImplementedError
+        pass
 
     def param(self):
         return []
@@ -34,7 +34,6 @@ class Conv2d(Module):
     """
     Class for implementing the Convolutional layer
     """
-
     def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
 
         self.input_channels = input_channels
@@ -56,7 +55,7 @@ class Conv2d(Module):
         else:
             self.padding = padding
 
-
+        # inititialize the weight and bias like in the pytorch implementation
         k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
         self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
@@ -71,6 +70,8 @@ class Conv2d(Module):
 
     def forward(self, *input):
 
+        input = input[0]
+
         def apply_conv(tensor):
 
             self.input_x = tensor
@@ -78,22 +79,25 @@ class Conv2d(Module):
             in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
 
-            h_out = math.ceil((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0] + 1)
-            w_out = math.ceil((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1] + 1)
+            h_out = math.ceil( ((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0]) + 1)
+            w_out = math.ceil( ((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1]) + 1)
+            
             output = out_unfolded.view(tensor.shape[0], self.output_channels, h_out, w_out)
             
             return output
 
-        # Apply forward function on either a single tensor or tuple of tensors
-        # and stores values needed for backward
-        if len(input) == 1:
-            self.forward_output = apply_conv(input[0])
-        else:
-            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
+        output_list = []
+        # apply conv to all the images in the batch
+        for i in range(input.shape[0]):
+            output_list.append(apply_conv(input[i].unsqueeze(0)))
+
+        self.forward_output = cat(output_list)
 
         return self.forward_output
 
     def backward(self, *gradwrtoutput):
+
+        gradwrtoutput = gradwrtoutput[0]
         
         def backward_pass(gradwrtoutput):
 
@@ -107,11 +111,13 @@ class Conv2d(Module):
             
             return gradwrtinput
 
-        # Apply backward function as needed
-        if len(gradwrtoutput) == 1:
-            return backward_pass(gradwrtoutput[0])
-        else:
-            return tuple(map(lambda grad: backward_pass(grad), input))
+        backward_output = []
+        # apply backward pass to all the images in the batch
+        for i in range(gradwrtoutput.shape[0]):
+            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze(0)))
+
+        return cat(backward_output)
+        
 
     def param(self):
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
@@ -142,6 +148,7 @@ class Upsampling(Module):
         else:
             self.padding = padding
 
+        # inititialize the weight and bias like in the pytorch implementation
         k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
         self.weight = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
@@ -155,6 +162,8 @@ class Upsampling(Module):
         self.forward_output = None
 
     def forward(self, *input):
+
+        input = input[0]
         
         def apply_conv(tensor):
             
@@ -169,14 +178,18 @@ class Upsampling(Module):
             output = folded.view(tensor.shape[0], folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
             return output
 
-        if len(input) == 1:
-            self.forward_output = apply_conv(input[0])
-        else:
-            self.forward_output = tuple(map(lambda tens: apply_conv(tens), input))
+        output_list = []
+        for i in range(input.shape[0]):
+            # apply conv to all the images in the batch
+            output_list.append(apply_conv(input[i].unsqueeze(0)))
+
+        self.forward_output = cat(output_list)
 
         return self.forward_output
 
     def backward(self, *gradwrtoutput):
+
+        gradwrtoutput = gradwrtoutput[0]
         
         def backward_pass(gradwrtoutput):
 
@@ -189,11 +202,12 @@ class Upsampling(Module):
 
             return gradwrtinput
 
-        # Apply backward function as needed
-        if len(gradwrtoutput) == 1:
-            return backward_pass(gradwrtoutput[0])
-        else:
-            return tuple(map(lambda grad: backward_pass(grad), input))
+        backward_output = []
+        # apply backward pass to all the images in the batch
+        for i in range(gradwrtoutput.shape[0]):
+            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze(0)))
+
+        return cat(backward_output)
 
     def param(self):
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
@@ -438,13 +452,13 @@ class Model ():
     def __init__(self) -> None :
         
         self.model = Sequential(
-            Conv2d(3, 64, 3, stride=2), 
+            Conv2d(3, 4, 2, stride=2), 
             ReLU(), 
-            Conv2d(64, 48, 3, stride=2), 
+            Conv2d(4, 6, 2, stride=2), 
             ReLU(), 
-            Upsampling(48, 64, 3),
+            Upsampling(6, 4, 2, stride=2),
             ReLU(),
-            Upsampling(64, 3, 3), 
+            Upsampling(4, 3, 2, stride=2), 
             Sigmoid())
         #self.model.to(device)
 
