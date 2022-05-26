@@ -376,7 +376,7 @@ class SGD(object):
     Class implementing mini-batch SGD optimization
     """
 
-    def __init__(self, model, nb_epochs=50, mini_batch_size=1, lr=1, criterion=MSE()):
+    def __init__(self, model, nb_epochs=50, mini_batch_size=1, lr=1e-3, criterion=MSE()):
         """
         SGD constructor
         :param model: the model to train
@@ -436,12 +436,20 @@ class SGD(object):
 
 class Model ():
     def __init__(self) -> None :
-        # instantaiate model + optimizer + loss function + any other stuff you need
+        
+        self.model = Sequential(
+            Conv2d(3, 64, 3, stride=2), 
+            ReLU(), 
+            Conv2d(64, 48, 3, stride=2), 
+            ReLU(), 
+            Upsampling(48, 64, 3),
+            ReLU(),
+            Upsampling(64, 3, 3), 
+            Sigmoid())
+        #self.model.to(device)
 
-        # model: UNet
-        # optimizer: Adam?
-        # loss function: MSE or HDRLoss for MonteCarlo images ?
-        pass
+        self.loss = MSE()
+        #self.loss.to(device)
 
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
@@ -449,12 +457,20 @@ class Model ():
 
     def train(self, train_input, train_target, num_epochs) -> None :
         #: train˙input : tensor of size (N, C, H, W) containing a noisy version of the images
-
         #: train˙target : tensor of size (N, C, H, W) containing another noisy version of the same images , which only differs from the input by their noise .
-        pass
+        mini_batch_size = 10
+
+        #train_input.to(device)
+        #train_target.to(device)
+
+        sgd = SGD(model=self.model, nb_epochs = num_epochs, mini_batch_size=mini_batch_size, criterion=self.loss)
+        self.model = sgd.train(train_input, train_target)
+
 
     def predict(self, test_input ) -> torch.Tensor:
         #:test_input : tensor of size (N1 , C, H, W) that has to be denoised by the trained or the loaded network .
         #: returns a tensor of the size (N1 , C, H, W)
-        pass
+        #test_input.to(device)
+
+        return self.model.forward(test_input)
 
