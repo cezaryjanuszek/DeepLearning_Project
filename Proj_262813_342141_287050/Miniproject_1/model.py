@@ -2,8 +2,8 @@
 from torch import nn
 from torch.nn import functional as F
 from torch import optim
-
-
+from pathlib import Path
+   
 import torch
 # torch.cuda.get_device_name(torch.cuda.current_device())
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -26,7 +26,7 @@ class Model():
             nn.Conv2d(48, 64, 3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(64, 3, 3, stride=1, padding=1),
-            nn.LeakyReLU(0.1)
+            nn.LeakyReLU(-0.1)
         )
         self.model.to(device)
 
@@ -38,8 +38,10 @@ class Model():
         self.loss.to(device)
 
     def load_pretrained_model(self) -> None :
-        ## This loads the parameters saved in bestmodel .pth into the model
-        self.model = torch.load('bestmodel.pth')
+        ## This loads the parameters saved in bestmodel.pth into the model
+        model_path = Path(__file__).parent / "bestmodel.pth"
+        self.model = torch.load(model_path)
+        self.model.to(device)
 
 
     def train(self, train_input, train_target, num_epochs) -> None :
@@ -47,8 +49,8 @@ class Model():
         #: train˙target : tensor of size (N, C, H, W) containing another noisy version of the same images , which only differs from the input by their noise .
         mini_batch_size = 100
 
-        train_input.to(device)
-        train_target.to(device)
+        train_input=train_input.float().to(device)
+        train_target=train_target.float().to(device)
 
         print('--------------------------')
         print('Training model')
@@ -59,6 +61,7 @@ class Model():
             for b in range(0, train_input.size(0), mini_batch_size):
                 output = self.model(train_input.narrow(0, b, mini_batch_size))
                 loss = self.loss(output, train_target.narrow(0, b, mini_batch_size))
+                loss.requires_grad_()
                 losses.append(loss)
 
                 self.optimizer.zero_grad()
@@ -68,11 +71,11 @@ class Model():
 
         print('---------------------------')
 
-    def predict(self, test_input ) -> torch.Tensor:
+    def predict(self, test_input) -> torch.Tensor:
         #:test_input : tensor of size (N1 , C, H, W) that has to be denoised by the trained or the loaded network .
         #: returns a tensor of the size (N1 , C, H, W)
-        test_input.to(device)
-
+        test_input=test_input.float().to(device)
+        
         return self.model(test_input)
 
 
