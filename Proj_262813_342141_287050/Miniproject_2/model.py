@@ -1,9 +1,9 @@
-
+import torch
 from torch import empty, cat, arange
 from torch.nn.functional import fold, unfold
 import math
+import pickle
 
-import torch
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -54,6 +54,11 @@ class Conv2d(Module):
         self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
 
+        # we tried the Kaiming initialization -> worse results
+        #rho = (2 ** .5)/((self.input_channels/self.output_channels) ** .5)
+        #self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).normal_(0, rho**2)
+        #self.bias = torch.empty(output_channels).fill_(0)
+
         # gradient tensors 
         self.weight_grad = torch.empty(self.weight.shape).zero_()
         self.bias_grad = torch.empty(self.bias.shape).zero_()
@@ -74,8 +79,8 @@ class Conv2d(Module):
             in_unfolded = unfold(tensor, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             out_unfolded = self.weight.view(self.output_channels, -1) @ in_unfolded + self.bias.view(1, -1, 1)
 
-            h_out = math.ceil( ((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0]) + 1)
-            w_out = math.ceil( ((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1]) + 1)
+            h_out = math.floor(((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0]) + 1)
+            w_out = math.floor(((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1]) + 1)
     
             output = out_unfolded.view(tensor.shape[0], self.output_channels, h_out, w_out)
             #output = fold(out_unfolded, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
@@ -98,6 +103,7 @@ class Conv2d(Module):
         def backward_pass(gradwrtoutput):
 
             input_x_unfolded = unfold(self.input_x, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
+
 
             # accumulate the gradients
             self.weight_grad += (gradwrtoutput.view(self.output_channels, -1) @ input_x_unfolded.squeeze(0).t()).view(self.weight_grad.shape)
@@ -151,6 +157,11 @@ class Upsampling(Module):
         k_sqrt = (1/(input_channels*self.kernel_size[0]*self.kernel_size[1])) ** .5
         self.weight = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).uniform_(-k_sqrt, k_sqrt)
         self.bias = torch.empty(output_channels).uniform_(-k_sqrt, k_sqrt)
+
+        # we tried the Kaiming initialization -> worse results
+        #rho = (2 ** .5)/((self.input_channels/self.output_channels) ** .5)
+        #self.weight = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).normal_(0, rho**2)
+        #self.bias = torch.empty(output_channels).fill_(0)
 
         # gradient tensors 
         self.weight_grad = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
@@ -421,7 +432,6 @@ class SGD(object):
         params=self.model.param()
         for p in params:
             p[0].sub_(self.lr * p[1])
-            p[0].sub_(self.lr * p[1])
         
     def train(self,train_input,train_target):
         """
@@ -437,12 +447,15 @@ class SGD(object):
             for b in range(0, train_input.size(0), self.mini_batch_size):
                 output = self.model.forward(train_input.narrow(0, b, self.mini_batch_size))
                 loss = self.criterion.forward(output, train_target.narrow(0, b, self.mini_batch_size))
-
                 sum_loss += loss
 
+                # set the gradients to 0
+                params=self.model.param()
+                for p in params:
+                    p[1].zero_()
+
                 l_grad = self.criterion.backward()
-                g = self.model.backward(l_grad)
-                print("Gradient: ", g.count_nonzero())
+                self.model.backward(l_grad)
                 self.step()
 
             print("{} iteration: loss={}".format(e, sum_loss))
@@ -453,20 +466,20 @@ class SGD(object):
 # ===============================================================
 
 
-class Model ():
+class Model(Module):
     """
     Final model
     """
     def __init__(self) -> None :
         
         self.model = Sequential(
-            Conv2d(3, 4, 2, stride=2), 
+            Conv2d(3, 32, 2, stride=2), 
             ReLU(), 
-            Conv2d(4, 6, 2, stride=2), 
+            Conv2d(32, 64, 2, stride=2), 
             ReLU(), 
-            Upsampling(6, 4, 2, stride=2),
+            Upsampling(64, 32, 2, stride=2),
             ReLU(),
-            Upsampling(4, 3, 2, stride=2), 
+            Upsampling(32, 3, 2, stride=2), 
             Sigmoid())
         #self.model.to(device)
 
@@ -475,13 +488,14 @@ class Model ():
 
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
-        pass
+
+        self.model = pickle.load(open('bestmodel.pkl', 'rb'))
 
     def train(self, train_input, train_target, num_epochs) -> None :
         #: train˙input : tensor of size (N, C, H, W) containing a noisy version of the images
         #: train˙target : tensor of size (N, C, H, W) containing another noisy version of the same images , which only differs from the input by their noise .
-        mini_batch_size = 10
-        learning_rate = 1e-5
+        mini_batch_size = 100
+        learning_rate = 1e-3
 
         #train_input.to(device)
         #train_target.to(device)
