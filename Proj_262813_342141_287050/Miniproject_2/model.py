@@ -297,7 +297,7 @@ class Sigmoid(Module):
         def backward(forward_output, gradwrtoutput):
 
             # gradient of Sigmoid function
-            grad = forward_output*(1 - forward_output)
+            grad = 1 - forward_output
             return grad * gradwrtoutput
 
         # Apply backward function as needed
