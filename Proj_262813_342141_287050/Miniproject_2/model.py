@@ -90,7 +90,7 @@ class Conv2d(Module):
         output_list = []
         # apply conv to all the images in the batch
         for i in range(input.shape[0]):
-            output_list.append(apply_conv(input[i].unsqueeze(0)))
+            output_list.append(apply_conv(input[i].unsqueeze_(0)))
 
         self.forward_output = cat(output_list)
 
@@ -108,7 +108,7 @@ class Conv2d(Module):
             # accumulate the gradients
             self.weight_grad += (gradwrtoutput.view(self.output_channels, -1) @ input_x_unfolded.squeeze(0).t()).view(self.weight_grad.shape)
             self.bias_grad += gradwrtoutput.sum((0,2,3))
-
+            
             gradwrtinput = self.weight.view(self.output_channels, -1).t() @ gradwrtoutput.view(1, self.output_channels, -1)
             gradwrtinput = fold(gradwrtinput, output_size=(self.input_x.shape[2], self.input_x.shape[3]), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             
@@ -117,7 +117,7 @@ class Conv2d(Module):
         backward_output = []
         # apply backward pass to all the images in the batch
         for i in range(gradwrtoutput.shape[0]):
-            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze(0)))
+            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze_(0)))
 
         return cat(backward_output)
         
@@ -179,21 +179,22 @@ class Upsampling(Module):
             # save input for backward pass
             self.input_x = tensor
 
+            
             # transpose convolution
-            linear_operation = (self.weight.view(self.input_channels, -1).t() @ tensor.view(self.input_channels, -1))
+            linear_operation = (self.weight.view(self.input_channels, -1).t() @ tensor.view(1, self.input_channels, -1))
 
             h_out = (tensor.shape[2] - 1) * self.stride[0] - (2*self.padding[0]) + self.kernel_size[0]
             w_out = (tensor.shape[3] - 1) * self.stride[1] - (2*self.padding[1]) + self.kernel_size[1]
 
             folded = fold(linear_operation, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
-            output = folded.view(tensor.shape[0], folded.shape[0], folded.shape[1], folded.shape[2]) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
+            output = folded.view(tensor.shape[0], self.output_channels, h_out, w_out) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
             
             return output
 
         output_list = []
         for i in range(input.shape[0]):
             # apply conv to all the images in the batch
-            output_list.append(apply_conv(input[i].unsqueeze(0)))
+            output_list.append(apply_conv(input[i].unsqueeze_(0)))
 
         self.forward_output = cat(output_list)
 
@@ -217,7 +218,7 @@ class Upsampling(Module):
         backward_output = []
         # apply backward pass to all the images in the batch
         for i in range(gradwrtoutput.shape[0]):
-            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze(0)))
+            backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze_(0)))
 
         return cat(backward_output)
 
@@ -322,6 +323,7 @@ class Sequential(Module):
     def __init__(self, *layers):
         # initializes the model with all the layers give as parameters
         self.layers = list(layers)
+        self.backward_output = None
 
     def forward(self, *input):
         # performs the forward pass through the model
@@ -431,7 +433,7 @@ class SGD(object):
 
         params=self.model.param()
         for p in params:
-            p[0].sub_(self.lr * p[1])
+            p[0].data.sub_(self.lr * p[1].data)
         
     def train(self,train_input,train_target):
         """
@@ -452,7 +454,7 @@ class SGD(object):
                 # set the gradients to 0
                 params=self.model.param()
                 for p in params:
-                    p[1].zero_()
+                    p[1].data.zero_()
 
                 l_grad = self.criterion.backward()
                 self.model.backward(l_grad)
@@ -489,7 +491,7 @@ class Model(Module):
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
 
-        self.model = pickle.load(open('bestmodel.pkl', 'rb'))
+        self.model.model = pickle.load(open('bestmodel.pkl', 'rb'))
 
     def train(self, train_input, train_target, num_epochs) -> None :
         #: train˙input : tensor of size (N, C, H, W) containing a noisy version of the images
@@ -497,8 +499,8 @@ class Model(Module):
         mini_batch_size = 100
         learning_rate = 1e-3
 
-        #train_input.to(device)
-        #train_target.to(device)
+        train_input.to(device)
+        train_target.to(device)
 
         sgd = SGD(model=self.model, nb_epochs = num_epochs, mini_batch_size=mini_batch_size, lr = learning_rate, criterion=self.loss)
         self.model = sgd.train(train_input, train_target)
@@ -507,7 +509,7 @@ class Model(Module):
     def predict(self, test_input ) -> torch.Tensor:
         #:test_input : tensor of size (N1 , C, H, W) that has to be denoised by the trained or the loaded network .
         #: returns a tensor of the size (N1 , C, H, W)
-        #test_input.to(device)
+        test_input.to(device)
 
         return self.model.forward(test_input)
 
