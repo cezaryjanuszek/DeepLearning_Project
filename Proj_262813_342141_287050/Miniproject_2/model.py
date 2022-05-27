@@ -3,6 +3,7 @@ from torch import empty, cat, arange
 from torch.nn.functional import fold, unfold
 import math
 import pickle
+from pathlib import Path
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -33,17 +34,17 @@ class Conv2d(Module):
         self.input_channels = input_channels
         self.output_channels = output_channels
 
-        # if only an int size is give for kernel_size/stride/padding make a tuple from it        
+        # if only an int size is give for kernel_size/stride/padding make a tuple from it
         if type(kernel_size) is int:
             self.kernel_size = (kernel_size, kernel_size)
         else:
-            self.kernel_size = kernel_size 
+            self.kernel_size = kernel_size
 
         if type(stride) is int:
             self.stride = (stride, stride)
         else:
             self.stride = stride
-        
+
         if type(padding) is int:
             self.padding = (padding, padding)
         else:
@@ -59,7 +60,7 @@ class Conv2d(Module):
         #self.weight = torch.empty((output_channels, input_channels, self.kernel_size[0], self.kernel_size[1])).normal_(0, rho**2)
         #self.bias = torch.empty(output_channels).fill_(0)
 
-        # gradient tensors 
+        # gradient tensors
         self.weight_grad = torch.empty(self.weight.shape).zero_()
         self.bias_grad = torch.empty(self.bias.shape).zero_()
 
@@ -81,10 +82,10 @@ class Conv2d(Module):
 
             h_out = math.floor(((tensor.shape[2]+(2*self.padding[0]) - self.kernel_size[0])/self.stride[0]) + 1)
             w_out = math.floor(((tensor.shape[3]+(2*self.padding[1]) - self.kernel_size[1])/self.stride[1]) + 1)
-    
+
             output = out_unfolded.view(tensor.shape[0], self.output_channels, h_out, w_out)
             #output = fold(out_unfolded, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
-            
+
             return output
 
         output_list = []
@@ -99,7 +100,7 @@ class Conv2d(Module):
     def backward(self, *gradwrtoutput):
 
         gradwrtoutput = gradwrtoutput[0]
-        
+
         def backward_pass(gradwrtoutput):
 
             input_x_unfolded = unfold(self.input_x, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
@@ -108,10 +109,10 @@ class Conv2d(Module):
             # accumulate the gradients
             self.weight_grad += (gradwrtoutput.view(self.output_channels, -1) @ input_x_unfolded.squeeze(0).t()).view(self.weight_grad.shape)
             self.bias_grad += gradwrtoutput.sum((0,2,3))
-            
+
             gradwrtinput = self.weight.view(self.output_channels, -1).t() @ gradwrtoutput.view(1, self.output_channels, -1)
             gradwrtinput = fold(gradwrtinput, output_size=(self.input_x.shape[2], self.input_x.shape[3]), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
-            
+
             return gradwrtinput
 
         backward_output = []
@@ -120,7 +121,7 @@ class Conv2d(Module):
             backward_output.append(backward_pass(gradwrtoutput[i].unsqueeze_(0)))
 
         return cat(backward_output)
-        
+
     def param(self):
         # return tuples of parameter + its gradient
         return [(self.weight, self.weight_grad), (self.bias, self.bias_grad)]
@@ -137,17 +138,17 @@ class Upsampling(Module):
         self.input_channels = input_channels
         self.output_channels = output_channels
 
-        # if only an int size is give for kernel_size/stride/padding make a tuple from it 
+        # if only an int size is give for kernel_size/stride/padding make a tuple from it
         if type(kernel_size) is int:
             self.kernel_size = (kernel_size, kernel_size)
         else:
-            self.kernel_size = kernel_size 
+            self.kernel_size = kernel_size
 
         if type(stride) is int:
             self.stride = (stride, stride)
         else:
             self.stride = stride
-        
+
         if type(padding) is int:
             self.padding = (padding, padding)
         else:
@@ -163,7 +164,7 @@ class Upsampling(Module):
         #self.weight = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).normal_(0, rho**2)
         #self.bias = torch.empty(output_channels).fill_(0)
 
-        # gradient tensors 
+        # gradient tensors
         self.weight_grad = torch.empty((input_channels, output_channels, self.kernel_size[0], self.kernel_size[1])).zero_()
         self.bias_grad = torch.empty(output_channels).zero_()
 
@@ -174,12 +175,12 @@ class Upsampling(Module):
     def forward(self, *input):
 
         input = input[0]
-        
+
         def apply_conv(tensor):
             # save input for backward pass
             self.input_x = tensor
 
-            
+
             # transpose convolution
             linear_operation = (self.weight.view(self.input_channels, -1).t() @ tensor.view(1, self.input_channels, -1))
 
@@ -188,7 +189,7 @@ class Upsampling(Module):
 
             folded = fold(linear_operation, output_size=(h_out, w_out), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
             output = folded.view(tensor.shape[0], self.output_channels, h_out, w_out) + self.bias.view(tensor.shape[0], self.output_channels, 1, 1)
-            
+
             return output
 
         output_list = []
@@ -203,7 +204,7 @@ class Upsampling(Module):
     def backward(self, *gradwrtoutput):
 
         gradwrtoutput = gradwrtoutput[0]
-        
+
         def backward_pass(gradwrtoutput):
 
             gradwrtoutput_unfolded = unfold(gradwrtoutput, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
@@ -331,12 +332,12 @@ class Sequential(Module):
         x = input[0]
         for l in self.layers:
             x = l.forward(x)
-        
+
         return x
 
     def backward(self, *gradwrtoutput):
         # performs the backward pass through the model
-        
+
         x = gradwrtoutput[0]
 
         for l in reversed(self.layers):
@@ -392,7 +393,7 @@ class MSE(Module):
         :returns: Grad(MSE(f(x), y)) = 2e / n, e = y - f(x)
         """
         return 2 * self.e / self.n
-    
+
     def param(self):
         #No parameters
         return []
@@ -415,14 +416,14 @@ class SGD(object):
         :param lr: learning rate, positive float, optional, default is 1e-2
         :param criterion: loss function to optimize, models.Module object, optional, default is criteria.LossMSE
         """
-        
+
         if not isinstance(nb_epochs, int) or nb_epochs <= 0:
             raise ValueError("Number of training epochs must be a positive integer")
         if not isinstance(mini_batch_size, int) or mini_batch_size <= 0:
             raise ValueError("Mini-batch size must be a positive integer")
         if not isinstance(lr, float) or lr <= 0:
             raise ValueError("Learning rate must be a positive number")
-        
+
         self.model = model
         self.nb_epochs = nb_epochs
         self.lr = lr
@@ -434,7 +435,7 @@ class SGD(object):
         params=self.model.param()
         for p in params:
             p[0].data.sub_(self.lr * p[1].data)
-        
+
     def train(self,train_input,train_target):
         """
         Function implementing the mini-batch training procedure
@@ -461,7 +462,7 @@ class SGD(object):
                 self.step()
 
             print("{} iteration: loss={}".format(e, sum_loss))
-            
+
         return self.model
 
 
@@ -473,15 +474,15 @@ class Model(Module):
     Final model
     """
     def __init__(self) -> None :
-        
+
         self.model = Sequential(
-            Conv2d(3, 32, 2, stride=2), 
-            ReLU(), 
-            Conv2d(32, 64, 2, stride=2), 
-            ReLU(), 
+            Conv2d(3, 32, 2, stride=2),
+            ReLU(),
+            Conv2d(32, 64, 2, stride=2),
+            ReLU(),
             Upsampling(64, 32, 2, stride=2),
             ReLU(),
-            Upsampling(32, 3, 2, stride=2), 
+            Upsampling(32, 3, 2, stride=2),
             Sigmoid())
         #self.model.to(device)
 
@@ -490,8 +491,9 @@ class Model(Module):
 
     def load_pretrained_model(self) -> None :
         ## This loads the parameters saved in bestmodel .pth into the model
-
-        self.model.model = pickle.load(open('bestmodel.pkl', 'rb'))
+        model_path = Path(__file__).parent / "bestmodel.pkl"
+        self.model.model = pickle.load(open(model_path, 'rb'))
+        #self.model.to(device)
 
     def train(self, train_input, train_target, num_epochs) -> None :
         #: train˙input : tensor of size (N, C, H, W) containing a noisy version of the images
@@ -499,8 +501,8 @@ class Model(Module):
         mini_batch_size = 100
         learning_rate = 1e-3
 
-        train_input.to(device)
-        train_target.to(device)
+        train_input=train_input.float() #.to(device)
+        train_target=train_target.float() #.to(device)
 
         sgd = SGD(model=self.model, nb_epochs = num_epochs, mini_batch_size=mini_batch_size, lr = learning_rate, criterion=self.loss)
         self.model = sgd.train(train_input, train_target)
@@ -509,7 +511,7 @@ class Model(Module):
     def predict(self, test_input ) -> torch.Tensor:
         #:test_input : tensor of size (N1 , C, H, W) that has to be denoised by the trained or the loaded network .
         #: returns a tensor of the size (N1 , C, H, W)
-        test_input.to(device)
+        test_input=test_input.float() #.to(device)
 
-        return self.model.forward(test_input)
+        return self.model.forward(test_input) * 255
 
