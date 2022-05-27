@@ -130,7 +130,7 @@ class Conv2d(Module):
 
 class Upsampling(Module):
     """
-    Class for implementing the Upsampling layer using the Transpose convolutional
+    Class for implementing the Upsampling layer using the Transpose Convolution
     """
     def __init__(self, input_channels, output_channels, kernel_size, stride=1, padding=0):
         # like for Conv2d
