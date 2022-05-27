@@ -3,7 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 from torch import optim
 from pathlib import Path
-   
+
 import torch
 # torch.cuda.get_device_name(torch.cuda.current_device())
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -17,15 +17,15 @@ class Model():
 
         # model
         self.model = nn.Sequential(
-            nn.Conv2d(3, 64, 3, stride=1, padding=1),
+            nn.Conv2d(3, 64, 3, stride=1, padding=1, bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(64, 48, 3, padding=1),
+            nn.Conv2d(64, 48, 3, padding=1, bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(48, 48, 3, padding=1),
+            nn.Conv2d(48, 48, 3, padding=1, bias=False),
             nn.ReLU(inplace=1),
-            nn.Conv2d(48, 64, 3, padding=1),
+            nn.Conv2d(48, 64, 3, padding=1, bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(64, 3, 3, stride=1, padding=1),
+            nn.Conv2d(64, 3, 3, stride=1, padding=1, bias=False),
             nn.LeakyReLU(-0.1)
         )
         self.model.to(device)
@@ -75,7 +75,7 @@ class Model():
         #:test_input : tensor of size (N1 , C, H, W) that has to be denoised by the trained or the loaded network .
         #: returns a tensor of the size (N1 , C, H, W)
         test_input=test_input.float().to(device)
-        
+
         return self.model(test_input)
 
 
