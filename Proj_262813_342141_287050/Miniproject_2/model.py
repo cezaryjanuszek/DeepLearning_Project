@@ -513,5 +513,5 @@ class Model(Module):
         #: returns a tensor of the size (N1 , C, H, W)
         test_input=test_input.float() #.to(device)
 
-        return self.model.forward(test_input) * 255
+        return self.model.forward(test_input)
 
